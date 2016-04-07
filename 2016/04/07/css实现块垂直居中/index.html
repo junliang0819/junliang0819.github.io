@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>用CSS实现块的垂直居中 | 陈俊良的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="块的水平居中可以设置margin:auto；行内元素可以设置text-align:text-center，垂直居中可以使用vertical-align:middle。块的垂直居中可以使用js监听window的resize事件来动态实现，但如果是做弹出层这种类型的弹窗，我们完全可以使用css来完成。
+利用定位实现12345678910111213141516171819202122&amp;lt;!DOCT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用CSS实现块的垂直居中">
+<meta property="og:url" content="http://yoursite.com/2016/04/07/css实现块垂直居中/index.html">
+<meta property="og:site_name" content="陈俊良的博客">
+<meta property="og:description" content="块的水平居中可以设置margin:auto；行内元素可以设置text-align:text-center，垂直居中可以使用vertical-align:middle。块的垂直居中可以使用js监听window的resize事件来动态实现，但如果是做弹出层这种类型的弹窗，我们完全可以使用css来完成。
+利用定位实现12345678910111213141516171819202122&amp;lt;!DOCT">
+<meta property="og:updated_time" content="2016-04-07T07:55:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用CSS实现块的垂直居中">
+<meta name="twitter:description" content="块的水平居中可以设置margin:auto；行内元素可以设置text-align:text-center，垂直居中可以使用vertical-align:middle。块的垂直居中可以使用js监听window的resize事件来动态实现，但如果是做弹出层这种类型的弹窗，我们完全可以使用css来完成。
+利用定位实现12345678910111213141516171819202122&amp;lt;!DOCT">
+  
+    <link rel="alternative" href="/atom.xml" title="陈俊良的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/img/me.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Once</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/随笔">随笔</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/junliang0819" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/u/5186983508?refer_flag=1001030102_&is_all=1" title="weibo">weibo</a>
+					        
+								<a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+					        
+								<a class="douban" target="_blank" href="#" title="douban">douban</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">我是谁，我从哪里来，我到哪里去？</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Once</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/img/me.png" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Once</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/随笔">随笔</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/junliang0819" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/u/5186983508?refer_flag=1001030102_&is_all=1" title="weibo">weibo</a>
+			        
+						<a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+			        
+						<a class="douban" target="_blank" href="#" title="douban">douban</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-css实现块垂直居中" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/04/07/css实现块垂直居中/" class="article-date">
+  	<time datetime="2016-04-07T06:58:29.000Z" itemprop="datePublished">2016-04-07</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      用CSS实现块的垂直居中
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>块的水平居中可以设置margin:auto；行内元素可以设置text-align:text-center，垂直居中可以使用vertical-align:middle。<br>块的垂直居中可以使用js监听window的resize事件来动态实现，但如果是做弹出层这种类型的弹窗，我们完全可以使用css来完成。</p>
+<h2 id="利用定位实现"><a href="#利用定位实现" class="headerlink" title="利用定位实现"></a>利用定位实现</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">"en"</span>&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=<span class="string">"UTF-8"</span>&gt;</span><br><span class="line">	&lt;title&gt;弹出层居中&lt;/title&gt;</span><br><span class="line">	&lt;style&gt;</span><br><span class="line">		.popups&#123;</span><br><span class="line">			position: absolute;</span><br><span class="line">			top: 50%;</span><br><span class="line">			left: 50%;</span><br><span class="line">			margin-left: -250px;</span><br><span class="line">			margin-top: -200px;</span><br><span class="line">			width: 500px;</span><br><span class="line">			height: 400px;</span><br><span class="line">			background: blue;</span><br><span class="line">		&#125;</span><br><span class="line">	&lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;div class=<span class="string">"popups"</span>&gt;哈哈&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>把弹出层设置为绝对定位或者固定定位，距离顶端50%，上边距设置为负的本身高度，距离左端50%，左边距设置为负的本身宽度，即可实现。</p>
+<h2 id="利用伪元素和行内块的垂直居中属性实现"><a href="#利用伪元素和行内块的垂直居中属性实现" class="headerlink" title="利用伪元素和行内块的垂直居中属性实现"></a>利用伪元素和行内块的垂直居中属性实现</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">  &lt;html&gt;</span><br><span class="line">      &lt;head&gt;</span><br><span class="line">         &lt;title&gt;弹出层居中&lt;/title&gt;</span><br><span class="line">          &lt;meta charset=<span class="string">"utf-8"</span>&gt;</span><br><span class="line">         &lt;style&gt;</span><br><span class="line">         	/*包含弹出层的容器*/</span><br><span class="line">            .popups-wrapper&#123;</span><br><span class="line">                position: fixed;</span><br><span class="line">                top: 0;</span><br><span class="line">                bottom: 0;</span><br><span class="line">                width: 100%;</span><br><span class="line">                text-align: center;</span><br><span class="line">             &#125;</span><br><span class="line">            /*弹出层遮罩*/</span><br><span class="line">             .popups-bg&#123;</span><br><span class="line">                position: absolute;</span><br><span class="line">                top: 0;</span><br><span class="line">                left: 0;</span><br><span class="line">                width: 100%;</span><br><span class="line">                height: 100%;</span><br><span class="line">                background-color: <span class="comment">#000;</span></span><br><span class="line">                opacity: .4;</span><br><span class="line">                filter: alpha(opacity = 40);</span><br><span class="line">            &#125;</span><br><span class="line">            /*弹出层*/</span><br><span class="line">             .popups&#123;</span><br><span class="line">                 display: inline-block;</span><br><span class="line">                 vertical-align: middle;</span><br><span class="line">                 width: 500px;</span><br><span class="line">               	 height: 250px;</span><br><span class="line">                 background-color: <span class="comment">#ff5400;</span></span><br><span class="line">             &#125;</span><br><span class="line">             .popups-wrapper:after&#123;</span><br><span class="line">                content: <span class="string">""</span>;</span><br><span class="line">                display: inline-block;</span><br><span class="line">              	height: 100%;</span><br><span class="line">                vertical-align: middle;</span><br><span class="line">             &#125;</span><br><span class="line">         &lt;/style&gt;</span><br><span class="line">     &lt;/head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">         &lt;div class=<span class="string">"popups-wrapper"</span>&gt;</span><br><span class="line">             &lt;div class=<span class="string">"popups-bg"</span>&gt;&lt;/div&gt;</span><br><span class="line">             &lt;div class=<span class="string">"popups"</span>&gt;&lt;/div&gt;</span><br><span class="line">         &lt;/div&gt;</span><br><span class="line">     &lt;/body&gt;</span><br><span class="line"> &lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>用一个容器把弹出层装起来，然后把弹出层设置为行内块元素，再添加一个同样为行内块属性并且宽度为0高度为100%容器高度的伪元素设置vertical-align为middle即可实现。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/04/06/tinymce上传本地图片/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">tinymce关于图片上传的坑</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="css实现块垂直居中" data-title="用CSS实现块的垂直居中" data-url="http://yoursite.com/2016/04/07/css实现块垂直居中/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"junliang0819"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 Once
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
