@@ -4,18 +4,24 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>js中的this，call，apply | 陈俊良的博客</title>
+  <title>__proto__与prototype | 陈俊良的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="函数里的this12345678910111213141516&amp;lt;script&amp;gt;	function Person(name,sex,age,job)&amp;#123;	        this.name = name;	        this.sex = sex;	        this.age = age;	        this.job = job;	        this.sho">
+  <meta name="description" content="在研究this用法的时候会用构造函数举例说明，而在涉及到构造函数的时候基本都会提到prototype来解释原型链的关系；我在调试的时候经常发现对象里面有个proto的属性，于是百度谷歌这两者之间的关系，试图了解它们多一点。
+先看这段代码：
+1234567891011&amp;lt;script&amp;gt;	function Person(name,age)&amp;#123;		this.name = name		t">
 <meta property="og:type" content="article">
-<meta property="og:title" content="js中的this，call，apply">
-<meta property="og:url" content="http://yoursite.com/2016/04/07/js的this及call、apply/index.html">
+<meta property="og:title" content="__proto__与prototype">
+<meta property="og:url" content="http://yoursite.com/2016/04/13/关于__proto__与prototype/index.html">
 <meta property="og:site_name" content="陈俊良的博客">
-<meta property="og:description" content="函数里的this12345678910111213141516&amp;lt;script&amp;gt;	function Person(name,sex,age,job)&amp;#123;	        this.name = name;	        this.sex = sex;	        this.age = age;	        this.job = job;	        this.sho">
-<meta property="og:updated_time" content="2016-04-07T13:26:47.000Z">
+<meta property="og:description" content="在研究this用法的时候会用构造函数举例说明，而在涉及到构造函数的时候基本都会提到prototype来解释原型链的关系；我在调试的时候经常发现对象里面有个proto的属性，于是百度谷歌这两者之间的关系，试图了解它们多一点。
+先看这段代码：
+1234567891011&amp;lt;script&amp;gt;	function Person(name,age)&amp;#123;		this.name = name		t">
+<meta property="og:updated_time" content="2016-04-13T07:48:15.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="js中的this，call，apply">
-<meta name="twitter:description" content="函数里的this12345678910111213141516&amp;lt;script&amp;gt;	function Person(name,sex,age,job)&amp;#123;	        this.name = name;	        this.sex = sex;	        this.age = age;	        this.job = job;	        this.sho">
+<meta name="twitter:title" content="__proto__与prototype">
+<meta name="twitter:description" content="在研究this用法的时候会用构造函数举例说明，而在涉及到构造函数的时候基本都会提到prototype来解释原型链的关系；我在调试的时候经常发现对象里面有个proto的属性，于是百度谷歌这两者之间的关系，试图了解它们多一点。
+先看这段代码：
+1234567891011&amp;lt;script&amp;gt;	function Person(name,age)&amp;#123;		this.name = name		t">
   
     <link rel="alternative" href="/atom.xml" title="陈俊良的博客" type="application/atom+xml">
   
@@ -201,11 +207,11 @@
 	</div>
 </nav>
 
-      <div class="body-wrap"><article id="post-js的this及call、apply" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-关于__proto__与prototype" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/04/07/js的this及call、apply/" class="article-date">
-  	<time datetime="2016-04-07T12:38:07.000Z" itemprop="datePublished">2016-04-07</time>
+      <a href="/2016/04/13/关于__proto__与prototype/" class="article-date">
+  	<time datetime="2016-04-13T06:07:31.000Z" itemprop="datePublished">2016-04-13</time>
 </a>
     </div>
   
@@ -218,7 +224,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      js中的this，call，apply
+      __proto__与prototype
     </h1>
   
 
@@ -234,16 +240,24 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="函数里的this"><a href="#函数里的this" class="headerlink" title="函数里的this"></a>函数里的this</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">	<span class="keyword">function</span> Person(name,sex,age,job)&#123;</span><br><span class="line">	        this.name = name;</span><br><span class="line">	        this.sex = sex;</span><br><span class="line">	        this.age = age;</span><br><span class="line">	        this.job = job;</span><br><span class="line">	        this.showPerson = <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">	            console.log(this);</span><br><span class="line">	        &#125;</span><br><span class="line">	    &#125;</span><br><span class="line">	　　Person() </span><br><span class="line">	　　window.showPerson() //window对象</span><br><span class="line"></span><br><span class="line">	var person = new Person(<span class="string">"cjl"</span>, <span class="string">"male"</span>, 25, <span class="string">"webFront"</span>)</span><br><span class="line">	person.showPerson() //Person &#123;name: <span class="string">"cjl"</span>, sex: <span class="string">"male"</span>, age: 25, job: <span class="string">"webFront"</span>&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-<p>上面代码首先定义了一个函数，函数里面用到了this；直接执行函数，随后执行window的showPerson()方法，可以发现，打印出的是window对象；使用new操作符实例化函数之后，this代表的是person对象，我们一般把构造函数函数名首字母大写以和普通函数区分。</p>
-<h3 id="new操作符的作用"><a href="#new操作符的作用" class="headerlink" title="new操作符的作用"></a>new操作符的作用</h3><ol>
-<li>创建一个新的对象；</li>
-<li>将构造函数的作用域赋给新对象（因此this就指向了这个新对象）；</li>
-<li>执行构造函数中的代码（this.xxx就为这个新对象添加某些属性、方法）；</li>
-<li>返回新的对象。</li>
+        <p>在研究this用法的时候会用构造函数举例说明，而在涉及到构造函数的时候基本都会提到prototype来解释原型链的关系；我在调试的时候经常发现对象里面有个<strong>proto</strong>的属性，于是百度谷歌这两者之间的关系，试图了解它们多一点。</p>
+<p>先看这段代码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">	<span class="keyword">function</span> Person(name,age)&#123;</span><br><span class="line">		this.name = name</span><br><span class="line">		this.age = age</span><br><span class="line">	&#125;</span><br><span class="line">	Person.prototype.say = <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">		console.log(<span class="string">'I am a person.'</span>)</span><br><span class="line">	&#125;</span><br><span class="line">	var me = new Person()</span><br><span class="line">	me.say()</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>new操作符到底做了什么？</p>
+<ol>
+<li>var me = {}，即创建了一个对象。</li>
+<li>me.<strong>proto</strong> = Person.prototype。</li>
+<li>Person.call(me)，也就是说构造me。</li>
 </ol>
-<h2 id="call和apply"><a href="#call和apply" class="headerlink" title="call和apply"></a>call和apply</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">	var name = <span class="string">"cjl"</span></span><br><span class="line">	<span class="keyword">function</span> fn(name)&#123;</span><br><span class="line">	    console.log(name);</span><br><span class="line">	    console.log(this.name);</span><br><span class="line">	    console.log(this);</span><br><span class="line">	&#125;</span><br><span class="line">	fn(<span class="string">"1"</span>) //1 cjl window</span><br><span class="line">	var obj = &#123;</span><br><span class="line">	  name:<span class="string">"cjl1"</span></span><br><span class="line">	&#125;</span><br><span class="line">	fn.apply(obj,[<span class="string">"2"</span>]) //2 cjl1 Object &#123;name: <span class="string">"cjl1"</span>&#125;</span><br><span class="line">	fn.call(obj,<span class="string">"2"</span>) //2 cjl1 Object &#123;name: <span class="string">"cjl1"</span>&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-<p>这两个方法经常在关于prototype原型的时候看到，但现在咱们先不管原型，单说这两个方法，我把它们理解成扩展、继承的意思；它们作用相同，不同的是传参类型区别：apply方法只能传递数组作为参数，call方法则是都可以。<br>上面代码定义了一个fn函数和一个对象，如果想让obj对象也拥有fn函数的方法，那么就可以使用apply或者call。</p>
+<p>关键是能否验证第二步？</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">	console.log(me.__proto__ === Person.prototype) // <span class="literal">true</span></span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>其实每一个对象都会有自动初始化<strong>proto</strong>属性，当我们访问一个对象属性时，如果这个对象没有这个属性，js就会在它的<strong>proto</strong>属性对象里面去找这个属性，如果还没找到，则会继续在<strong>proto</strong>对象的<strong>proto</strong>属性对象里面找，直到某一层的<strong>proto</strong>属性为null。<br>这也是我们经常所说的原型链的概念。</p>
+<p>第一段代码我们实例化生成的me对象在调用say方法的时候,自身是没有的，于是去me.<strong>proto</strong>里面找，而第二段代码证明me.<strong>proto</strong>是和Person.prototype指向同一个对象,那么就能找到say方法。</p>
+<p>再看下一段代码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">	<span class="keyword">function</span> Person(name,age)&#123;</span><br><span class="line">		this.name = name</span><br><span class="line">		this.age = age</span><br><span class="line">	&#125;</span><br><span class="line">	Person.prototype.salary = 5000</span><br><span class="line">	Person.prototype.say = <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">		console.log(<span class="string">'I am a person.'</span>)</span><br><span class="line">	&#125;</span><br><span class="line">	var me = new Person()</span><br><span class="line">	<span class="keyword">function</span> <span class="function"><span class="title">Coder</span></span>()&#123;&#125;</span><br><span class="line">	Coder.prototype = me</span><br><span class="line">	Coder.prototype.code = <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">		console.log(<span class="string">'我的工作是敲码。'</span>)</span><br><span class="line">	&#125;</span><br><span class="line">	Coder.prototype.salary = 10000</span><br><span class="line">	var he = new Coder()</span><br><span class="line">	he.say()</span><br><span class="line">	he.code()</span><br><span class="line">	console.log(he.salary)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>我们定义了两个构造函数Person和Coder，给Person的原型定义了salary属性和say方法；然后实例化Person了一个me对象，并把它指向了Coder的原型，然后在其原型上接着添加了code方法和修改了salary属性。</p>
+<p>实例化Coder成he对象<br>调用say方法，本身没有，去<strong>proto</strong>（me对象）找，也没有此方法，再去me的<strong>proto</strong>找，找到。因此he.say()结果输出为:I am a person.<br>调用code方法，本身没有，去<strong>proto</strong>（me对象）找，code方法已被添加。因此he.code()结果输出为：’我的工作是敲码。’<br>查找salary属性,本身没有，去<strong>proto</strong>（me对象）找，找到已被修改过的salary属性。因此he.salary结果输出为：10000。</p>
+<p>最后，我发现，prototype只存在于构造函数（Object，Array，Function，自定义的等等），实际的对象并没有这个属性，意思就是说所以对象和函数都会有<strong>proto</strong>属性，而只有函数会有prototype属性，值为一个空函数，而且基本是在new一个构造函数的时候会用到，原型链的本质还是在<strong>proto</strong>。</p>
 
       
     </div>
@@ -253,18 +267,9 @@
     
 <nav id="article-nav">
   
-    <a href="/2016/04/13/关于__proto__与prototype/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          __proto__与prototype
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/04/07/css实现块垂直居中/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">用CSS实现块的垂直居中</div>
+    <a href="/2016/04/07/js的this及call、apply/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">js中的this，call，apply</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -299,7 +304,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="js的this及call、apply" data-title="js中的this，call，apply" data-url="http://yoursite.com/2016/04/07/js的this及call、apply/"></div>
+	<div class="ds-thread" data-thread-key="关于__proto__与prototype" data-title="__proto__与prototype" data-url="http://yoursite.com/2016/04/13/关于__proto__与prototype/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
