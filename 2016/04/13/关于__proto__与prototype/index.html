@@ -16,7 +16,7 @@
 <meta property="og:description" content="在研究this用法的时候会用构造函数举例说明，而在涉及到构造函数的时候基本都会提到prototype来解释原型链的关系；我在调试的时候经常发现对象里面有个proto的属性，于是百度谷歌这两者之间的关系，试图了解它们多一点。
 先看这段代码：
 1234567891011&amp;lt;script&amp;gt;	function Person(name,age)&amp;#123;		this.name = name		t">
-<meta property="og:updated_time" content="2016-04-13T07:48:15.000Z">
+<meta property="og:updated_time" content="2016-04-13T08:06:19.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="__proto__与prototype">
 <meta name="twitter:description" content="在研究this用法的时候会用构造函数举例说明，而在涉及到构造函数的时候基本都会提到prototype来解释原型链的关系；我在调试的时候经常发现对象里面有个proto的属性，于是百度谷歌这两者之间的关系，试图了解它们多一点。
@@ -246,7 +246,7 @@
 <p>new操作符到底做了什么？</p>
 <ol>
 <li>var me = {}，即创建了一个对象。</li>
-<li>me.<strong>proto</strong> = Person.prototype。</li>
+<li>me.<strong><strong>proto</strong></strong> = Person.prototype。</li>
 <li>Person.call(me)，也就是说构造me。</li>
 </ol>
 <p>关键是能否验证第二步？</p>

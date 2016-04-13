@@ -234,7 +234,7 @@
 <p>new操作符到底做了什么？</p>
 <ol>
 <li>var me = {}，即创建了一个对象。</li>
-<li>me.<strong>proto</strong> = Person.prototype。</li>
+<li>me.<strong><strong>proto</strong></strong> = Person.prototype。</li>
 <li>Person.call(me)，也就是说构造me。</li>
 </ol>
 <p>关键是能否验证第二步？</p>
