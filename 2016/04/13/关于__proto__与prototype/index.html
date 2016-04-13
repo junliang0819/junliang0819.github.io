@@ -16,7 +16,7 @@
 <meta property="og:description" content="在研究this用法的时候会用构造函数举例说明，而在涉及到构造函数的时候基本都会提到prototype来解释原型链的关系；我在调试的时候经常发现对象里面有个__proto__的属性，于是百度谷歌这两者之间的关系，试图了解它们多一点。
 先看这段代码：
 1234567891011&amp;lt;script&amp;gt;	function Person(name,age)&amp;#123;		this.name = nam">
-<meta property="og:updated_time" content="2016-04-13T08:18:57.000Z">
+<meta property="og:updated_time" content="2016-04-13T08:20:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="__proto__与prototype">
 <meta name="twitter:description" content="在研究this用法的时候会用构造函数举例说明，而在涉及到构造函数的时候基本都会提到prototype来解释原型链的关系；我在调试的时候经常发现对象里面有个__proto__的属性，于是百度谷歌这两者之间的关系，试图了解它们多一点。
@@ -250,7 +250,7 @@
 <li>Person.call(me)，也就是说构造me。</li>
 </ol>
 <p>关键是能否验证第二步？</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">	console.log(me.\__proto\__ === Person.prototype) // <span class="literal">true</span></span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">	console.log(me.__proto__ === Person.prototype) // <span class="literal">true</span></span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
 <p>其实每一个对象都会有自动初始化__proto__属性，当我们访问一个对象属性时，如果这个对象没有这个属性，js就会在它的__proto__属性对象里面去找这个属性，如果还没找到，则会继续在__proto__对象的__proto__属性对象里面找，直到某一层的__proto__属性为null。<br>这也是我们经常所说的原型链的概念。</p>
 <p>第一段代码我们实例化生成的me对象在调用say方法的时候,自身是没有的，于是去me.__proto__里面找，而第二段代码证明me.__proto__是和Person.prototype指向同一个对象,那么就能找到say方法。</p>
 <p>再看下一段代码：</p>
