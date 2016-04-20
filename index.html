@@ -238,8 +238,8 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//远程文件（http://xxx.com/jsonp?callback=handleJsonp）的代码</span><br><span class="line">handleJsonp(&#123;result:<span class="string">'我是远程数据'</span>&#125;)</span><br></pre></td></tr></table></figure>
 <p>这就是实现原理，剩下的就是需要封装一下代码以便于重复调用和方便使用。JQuery帮我们做了这个事情，jq的写法：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">	$.ajax(&#123;</span><br><span class="line">			<span class="built_in">type</span>: <span class="string">'get'</span>,</span><br><span class="line">			url: <span class="string">'https://www.baidu.com'</span>,</span><br><span class="line">			dataType: <span class="string">'jsonp'</span>,</span><br><span class="line">			jsonp: <span class="string">'callback'</span>,//告诉请求处理端用以获取回调函数名的参数（默认为callback）</span><br><span class="line">			jsonpCallback: <span class="string">'$.MFT.cross'</span>//自定义的jsonp回调函数名，可以不写，也可以写<span class="string">"?"</span></span><br><span class="line">		&#125;).done(<span class="keyword">function</span>(data)&#123;</span><br><span class="line">			console.log(data)</span><br><span class="line">		&#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-<p>补充说明：jsonp是一种非官方的传输协议，它和ajax在调用方式上看起来像，但本质是不同的。ajax的核心是通过XmlHttpRequest获取非本页内容，而jsonp的核心则是动态添加<script>标签来调用服务器提供的js脚本，只不过jquery等框架将jsonp做了一种ajax形式的封装而已。</p>
-</script></p>
+<p>补充说明：jsonp是一种非官方的传输协议，它和ajax在调用方式上看起来像，但本质是不同的。ajax的核心是通过XmlHttpRequest获取非本页内容，而jsonp的核心则是动态添加script标签来调用服务器提供的js脚本，只不过jquery等框架将jsonp做了一种ajax形式的封装而已。</p>
+
       
     </div>
     
