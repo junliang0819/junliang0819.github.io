@@ -202,6 +202,70 @@
 
       <div class="body-wrap">
   
+    <article id="post-tinymce上传本地图片" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/04/06/tinymce上传本地图片/" class="article-date">
+  	<time datetime="2016-04-06T12:13:57.000Z" itemprop="datePublished">2016-04-06</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/06/tinymce上传本地图片/">tinymce关于图片上传的坑</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>由于项目需求，需要一个富文本编辑器，首先想到的就是百度的Ueditor，于是去官网下载来学习（个人感觉官网比较不时尚……）。</p>
+<p>然后下载了一个jsp版本的来鼓捣，使用下来的感觉就是后端配置繁琐，我不懂后端，而且功能太多我们项目用不上有点浪费，可定制化不强，主题也不够美观，于是又百度谷歌github了一下，发现了tinymce，star还是蛮多的，UI看上去又很舒服，便去看了一下官网<a href="https://www.tinymce.com" target="_blank" rel="external">tinyMce</a>学习使用方法（貌似需要科学上网O(∩_∩)O~）。</p>
+<h2 id="下载使用"><a href="#下载使用" class="headerlink" title="下载使用"></a>下载使用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;script src=<span class="string">"//cdn.tinymce.com/4/tinymce.min.js"</span>&gt;&lt;/script&gt;&lt;!-- 使用cdn或者直接引用项目路径 --&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;textarea&gt;简单！就这样使用它。&lt;/textarea&gt;</span><br><span class="line">  &lt;script&gt;tinymce.init(&#123;</span><br><span class="line">  	selector: <span class="string">'textarea'</span>,  //加载tinymce的dom节点</span><br><span class="line">  	&#125;);&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>这样就已经能使用tinymce了，但是非常简单，只能编辑文字，还需要一些简单的配置</p>
+<h2 id="配置插件"><a href="#配置插件" class="headerlink" title="配置插件"></a>配置插件</h2><p>下载下来的插件包是包含了很多核心插件的，右键菜单、图文混拍、颜色拾取、表格绘制、图片编辑等等，官方都有说明，只不过没有中文官网，我也只能懂大概的样子，但并不妨碍使用。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">	tinymce.init(&#123;</span><br><span class="line">	  	selector: <span class="string">'textarea'</span>,</span><br><span class="line">	    theme: <span class="string">'modern'</span>, //使用的主题，可以自定义</span><br><span class="line">	    width: 600,</span><br><span class="line">	    height: 300,</span><br><span class="line">	    plugins: [</span><br><span class="line">	      <span class="string">'advlist autolink link image'</span></span><br><span class="line">	    ], //插件配置项（重要）</span><br><span class="line">	    toolbar: <span class="string">'insertfile undo redo | styleselect | bold italic |'</span>, //工具栏配置项（重要）</span><br><span class="line">	    menubar:  <span class="string">'file edit view'</span>, //菜单栏配置项</span><br><span class="line">	  	language: <span class="string">'zh_CN'</span>//本地化语言（需要另外下载）</span><br><span class="line">	&#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>配置项具体意义可以参见官网，还可以自己定制主题，扩展插件等；不过却有一个问题很令人头疼，就是它本身只支持网络图片地址的引用，不支持本地图片上传，所以需要使用到插件，官方推荐的插件PowerPaste是需要付费的，然而，嘿嘿，你懂的，所以就找了一个免费的<a href="https://github.com/PerfectlyNormal/tinymce-rails-imageupload" target="_blank" rel="external">imageupload</a>。</p>
+<h2 id="上传本地图片"><a href="#上传本地图片" class="headerlink" title="上传本地图片"></a>上传本地图片</h2><p>下载了插件放在指定结构目录（tinymce/plugins）下就可以使用了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">	tinymce.init(&#123;</span><br><span class="line">	  	selector: <span class="string">'textarea'</span>,</span><br><span class="line">	    theme: <span class="string">'modern'</span>, //使用的主题，可以自定义</span><br><span class="line">	    width: 600,</span><br><span class="line">	    height: 300,</span><br><span class="line">	    plugins: [</span><br><span class="line">	      <span class="string">'advlist autolink link image uploadimage'</span></span><br><span class="line">	    ], //插件配置项（重要）</span><br><span class="line">	    toolbar: <span class="string">'insertfile undo redo | styleselect | bold italic |uploadimage'</span>, //工具栏配置项（重要）</span><br><span class="line">	    menubar:  <span class="string">'file edit view'</span>, //菜单栏配置项</span><br><span class="line">	  	language: <span class="string">'zh_CN'</span>,//本地化语言（需要另外下载）</span><br><span class="line">	    uploadimage_form_url: <span class="string">'xxx/url'</span>//图片上传服务器地址</span><br><span class="line">	&#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>需要注意的是服务器必须返回指定格式的json对象：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">	// 上传成功</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="string">"image"</span>: &#123;</span><br><span class="line">			<span class="string">"url"</span>: <span class="string">'xxx.png'</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	// 上传失败</span><br><span class="line">	&#123;</span><br><span class="line">		error: &#123;</span><br><span class="line">			<span class="string">"message"</span>: <span class="string">'只能上传图片'</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>好了，到此就可以使用tinymce上传本地图片了。更多更详细的内容还是去官网看吧！</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-不可错过的迷你库" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">

@@ -4,17 +4,24 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>Archives: 2016 | 陈俊良的博客</title>
+  <title>js的函数节流与函数去抖 | 陈俊良的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="学习他人经验，是少走冤枉路的最快捷径…">
-<meta property="og:type" content="website">
-<meta property="og:title" content="陈俊良的博客">
-<meta property="og:url" content="http://yoursite.com/archives/2016/index.html">
+  <meta name="description" content="概念函数节流(throttle)：让一个函数无法在很短的时间间隔内连续调用，在上一次函数执行后过了规定的时间间隔，才能进行下一次该函数的调用。
+函数去抖(debounce)：让一个函数在一定时间间隔内没有被调用时，才开始执行被调用的方法。
+应用最近项目中使用到了window的resize事件，回调里在调整整个页面的布局。那么就会有一个问题，每次改变窗口大小都会执行回调，是很频繁的，如果回调过重的话">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js的函数节流与函数去抖">
+<meta property="og:url" content="http://yoursite.com/2016/04/25/js函数节流与函数去抖/index.html">
 <meta property="og:site_name" content="陈俊良的博客">
-<meta property="og:description" content="学习他人经验，是少走冤枉路的最快捷径…">
+<meta property="og:description" content="概念函数节流(throttle)：让一个函数无法在很短的时间间隔内连续调用，在上一次函数执行后过了规定的时间间隔，才能进行下一次该函数的调用。
+函数去抖(debounce)：让一个函数在一定时间间隔内没有被调用时，才开始执行被调用的方法。
+应用最近项目中使用到了window的resize事件，回调里在调整整个页面的布局。那么就会有一个问题，每次改变窗口大小都会执行回调，是很频繁的，如果回调过重的话">
+<meta property="og:updated_time" content="2016-04-25T12:14:33.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="陈俊良的博客">
-<meta name="twitter:description" content="学习他人经验，是少走冤枉路的最快捷径…">
+<meta name="twitter:title" content="js的函数节流与函数去抖">
+<meta name="twitter:description" content="概念函数节流(throttle)：让一个函数无法在很短的时间间隔内连续调用，在上一次函数执行后过了规定的时间间隔，才能进行下一次该函数的调用。
+函数去抖(debounce)：让一个函数在一定时间间隔内没有被调用时，才开始执行被调用的方法。
+应用最近项目中使用到了window的resize事件，回调里在调整整个页面的布局。那么就会有一个问题，每次改变窗口大小都会执行回调，是很频繁的，如果回调过重的话">
   
     <link rel="alternative" href="/atom.xml" title="陈俊良的博客" type="application/atom+xml">
   
@@ -200,161 +207,113 @@
 	</div>
 </nav>
 
-      <div class="body-wrap">
+      <div class="body-wrap"><article id="post-js函数节流与函数去抖" class="article article-type-post" itemscope itemprop="blogPost">
   
+    <div class="article-meta">
+      <a href="/2016/04/25/js函数节流与函数去抖/" class="article-date">
+  	<time datetime="2016-04-25T11:56:44.000Z" itemprop="datePublished">2016-04-25</time>
+</a>
+    </div>
   
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      js的函数节流与函数去抖
+    </h1>
+  
+
+      </header>
       
+      <div class="article-info article-info-post">
+        
+        
+
+        <div class="clearfix"></div>
+      </div>
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
     
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/04/25/js函数节流与函数去抖/" class="archive-article-date">
-  	<time datetime="2016-04-25T11:56:44.000Z" itemprop="datePublished">Apr 25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/04/25/js函数节流与函数去抖/">js的函数节流与函数去抖</a>
-    </h1>
-  
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p><em>函数节流(throttle)</em>：让一个函数无法在很短的时间间隔内连续调用，在上一次函数执行后过了规定的时间间隔，才能进行下一次该函数的调用。</p>
+<p><em>函数去抖(debounce)</em>：让一个函数在一定时间间隔内没有被调用时，才开始执行被调用的方法。</p>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><p>最近项目中使用到了window的resize事件，回调里在调整整个页面的布局。那么就会有一个问题，每次改变窗口大小都会执行回调，是很频繁的，如果回调过重的话，会极大地影响前端页面性能。因此才找了相关文章，通常我们会在有交互的地方绑定事件，而如果这种事件被频繁触发的话就很不合适了。</p>
+<ol>
+<li>比如说刚才提到的resize事件，或者mousemove事件，resize会在你拖动窗口的时候不停触发，mousemove会在你鼠标移动的时候被连续触发。</li>
+<li>我们对用户输入时监听，每一次改变都会触发，而我们是想用户停下来的时候触发而已。</li>
+</ol>
+<p>类似的应用还有很多，总之，我们是想过滤频繁触发的事件回调，使其在真正需要的时候执行。</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>这种常见的情况一般都会有库为我们解决。之前有underscore，现在更流行的却是<a href="http://lodashjs.com/docs/#_throttlefunc-wait0-options" target="_blank" rel="external">lodash</a>。</p>
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/04/19/js的跨域/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">JS的跨域问题</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/04/19/js的跨域/" class="archive-article-date">
-  	<time datetime="2016-04-19T15:30:28.000Z" itemprop="datePublished">Apr 19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/04/19/js的跨域/">JS的跨域问题</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/04/13/关于__proto__与prototype/" class="archive-article-date">
-  	<time datetime="2016-04-13T06:07:31.000Z" itemprop="datePublished">Apr 13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/04/13/关于__proto__与prototype/">__proto__与prototype</a>
-    </h1>
-  
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/04/07/js的this及call、apply/" class="archive-article-date">
-  	<time datetime="2016-04-07T12:38:07.000Z" itemprop="datePublished">Apr 7</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/04/07/js的this及call、apply/">js中的this，call，apply</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/04/07/css实现块垂直居中/" class="archive-article-date">
-  	<time datetime="2016-04-07T06:58:29.000Z" itemprop="datePublished">Apr 7</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/04/07/css实现块垂直居中/">用CSS实现块的垂直居中</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="js函数节流与函数去抖" data-title="js的函数节流与函数去抖" data-url="http://yoursite.com/2016/04/25/js函数节流与函数去抖/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"junliang0819"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
 
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/2016/page/2/">2</a><a class="extend next" rel="next" href="/archives/2016/page/2/">Next &raquo;</a>
-    </nav>
-  
+
+
 
 </div>
       <footer id="footer">
@@ -380,8 +339,8 @@
 		mathjax: true,
 		animate: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false
