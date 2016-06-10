@@ -202,6 +202,63 @@
 
       <div class="body-wrap">
   
+    <article id="post-css实现块垂直居中" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/04/07/css实现块垂直居中/" class="article-date">
+  	<time datetime="2016-04-07T06:58:29.000Z" itemprop="datePublished">2016-04-07</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/07/css实现块垂直居中/">用CSS实现块的垂直居中</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>块的水平居中可以设置margin:auto；行内元素可以设置text-align:text-center，垂直居中可以使用vertical-align:middle。<br>块的垂直居中可以使用js监听window的resize事件来动态实现，但如果是做弹出层这种类型的弹窗，我们完全可以使用css来完成。</p>
+<h2 id="利用定位实现"><a href="#利用定位实现" class="headerlink" title="利用定位实现"></a>利用定位实现</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">"en"</span>&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=<span class="string">"UTF-8"</span>&gt;</span><br><span class="line">	&lt;title&gt;弹出层居中&lt;/title&gt;</span><br><span class="line">	&lt;style&gt;</span><br><span class="line">		.popups&#123;</span><br><span class="line">			position: absolute;</span><br><span class="line">			top: 50%;</span><br><span class="line">			left: 50%;</span><br><span class="line">			margin-left: -250px;</span><br><span class="line">			margin-top: -200px;</span><br><span class="line">			width: 500px;</span><br><span class="line">			height: 400px;</span><br><span class="line">			background: blue;</span><br><span class="line">		&#125;</span><br><span class="line">	&lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;div class=<span class="string">"popups"</span>&gt;哈哈&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>把弹出层设置为绝对定位或者固定定位，距离顶端50%，上边距设置为负的本身高度，距离左端50%，左边距设置为负的本身宽度，即可实现。</p>
+<h2 id="利用伪元素和行内块的垂直居中属性实现"><a href="#利用伪元素和行内块的垂直居中属性实现" class="headerlink" title="利用伪元素和行内块的垂直居中属性实现"></a>利用伪元素和行内块的垂直居中属性实现</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">  &lt;html&gt;</span><br><span class="line">      &lt;head&gt;</span><br><span class="line">         &lt;title&gt;弹出层居中&lt;/title&gt;</span><br><span class="line">          &lt;meta charset=<span class="string">"utf-8"</span>&gt;</span><br><span class="line">         &lt;style&gt;</span><br><span class="line">         	/*包含弹出层的容器*/</span><br><span class="line">            .popups-wrapper&#123;</span><br><span class="line">                position: fixed;</span><br><span class="line">                top: 0;</span><br><span class="line">                bottom: 0;</span><br><span class="line">                width: 100%;</span><br><span class="line">                text-align: center;</span><br><span class="line">             &#125;</span><br><span class="line">            /*弹出层遮罩*/</span><br><span class="line">             .popups-bg&#123;</span><br><span class="line">                position: absolute;</span><br><span class="line">                top: 0;</span><br><span class="line">                left: 0;</span><br><span class="line">                width: 100%;</span><br><span class="line">                height: 100%;</span><br><span class="line">                background-color: <span class="comment">#000;</span></span><br><span class="line">                opacity: .4;</span><br><span class="line">                filter: alpha(opacity = 40);</span><br><span class="line">            &#125;</span><br><span class="line">            /*弹出层*/</span><br><span class="line">             .popups&#123;</span><br><span class="line">                 display: inline-block;</span><br><span class="line">                 vertical-align: middle;</span><br><span class="line">                 width: 500px;</span><br><span class="line">               	 height: 250px;</span><br><span class="line">                 background-color: <span class="comment">#ff5400;</span></span><br><span class="line">             &#125;</span><br><span class="line">             .popups-wrapper:after&#123;</span><br><span class="line">                content: <span class="string">""</span>;</span><br><span class="line">                display: inline-block;</span><br><span class="line">              	height: 100%;</span><br><span class="line">                vertical-align: middle;</span><br><span class="line">             &#125;</span><br><span class="line">         &lt;/style&gt;</span><br><span class="line">     &lt;/head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">         &lt;div class=<span class="string">"popups-wrapper"</span>&gt;</span><br><span class="line">             &lt;div class=<span class="string">"popups-bg"</span>&gt;&lt;/div&gt;</span><br><span class="line">             &lt;div class=<span class="string">"popups"</span>&gt;&lt;/div&gt;</span><br><span class="line">         &lt;/div&gt;</span><br><span class="line">     &lt;/body&gt;</span><br><span class="line"> &lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>用一个容器把弹出层装起来，然后把弹出层设置为行内块元素，再添加一个同样为行内块属性并且宽度为0高度为100%容器高度的伪元素设置vertical-align为middle即可实现。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-tinymce上传本地图片" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
