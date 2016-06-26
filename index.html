@@ -202,6 +202,61 @@
 
       <div class="body-wrap">
   
+    <article id="post-composition新事件" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/06/26/composition新事件/" class="article-date">
+  	<time datetime="2016-06-26T05:33:10.000Z" itemprop="datePublished">2016-06-26</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/26/composition新事件/">compositon事件的使用</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>浏览器为我们提供了很多事件，一般来说已经够用了。但如果有这种情况呢：我在搜索某东西时，需要在我完成输入后立即搜索。<br>一般来说可以绑定input元素的input事件，但是会有一个问题，在我输入汉字词语的时候，我正在输拼音还没生成汉字的时候，就已经触发了input事件，比如我想搜’自行车’，我输入’zixingche’的时候，每输入一个拼音都会触发，这并不是我们想要的。然而，新的compositionstart和compositionend事件可以帮我们解决这个问题。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;input <span class="built_in">type</span>=<span class="string">"text"</span>&gt;</span><br><span class="line">	&lt;script&gt;</span><br><span class="line">		var lock</span><br><span class="line">		$(<span class="string">'input'</span>).on(<span class="string">'input'</span>,<span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">			<span class="keyword">if</span>(!lock)&#123;</span><br><span class="line">				console.log(this.value)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;)</span><br><span class="line">		$(<span class="string">'input'</span>).on(<span class="string">'compositionstart'</span>,<span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">			lock = <span class="literal">true</span></span><br><span class="line">		&#125;)</span><br><span class="line">		$(<span class="string">'input'</span>).on(<span class="string">'compositionend'</span>,<span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">			lock = <span class="literal">false</span></span><br><span class="line">		&#125;)</span><br><span class="line">	&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+<p>在调用输入法开始输入时，只会触发一次compositionstart，生成词语到输入框时，会触发compositionend，这样我们就可以设置一个状态（lock变量），监听input事件进行搜索时，如果调用了输入法，就锁定这个状态，等待输入完成之后解锁，开始搜索……<br>有点需要注意的是：如果直接在compositionend的时候进行搜索，this.value得到的值是未生成词的值，并且正常的字母和数字、字符输入是不会触发的。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-iframe的高度问题" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -436,68 +491,6 @@
 <p>我们定义了两个构造函数Person和Coder，给Person的原型定义了salary属性和say方法；然后实例化Person了一个me对象，并把它指向了Coder的原型，然后在其原型上接着添加了code方法和修改了salary属性。</p>
 <p>实例化Coder成he对象<br>调用say方法，本身没有，去__proto__（me对象）找，也没有此方法，再去me的__proto__找，找到。因此he.say()结果输出为:I am a person.<br>调用code方法，本身没有，去__proto__（me对象）找，code方法已被添加。因此he.code()结果输出为：’我的工作是敲码。’<br>查找salary属性,本身没有，去__proto__（me对象）找，找到已被修改过的salary属性。因此he.salary结果输出为：10000。</p>
 <p>最后，我发现，prototype只存在于构造函数（Object，Array，Function，自定义的等等），实际的对象并没有这个属性，意思就是说所以对象和函数都会有__proto__属性，而只有函数会有prototype属性，值为一个空函数，而且基本是在new一个构造函数的时候会用到，原型链的本质还是在__proto__。</p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-js的this及call、apply" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/04/07/js的this及call、apply/" class="article-date">
-  	<time datetime="2016-04-07T12:38:07.000Z" itemprop="datePublished">2016-04-07</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/07/js的this及call、apply/">js中的this，call，apply</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="函数里的this"><a href="#函数里的this" class="headerlink" title="函数里的this"></a>函数里的this</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">	<span class="keyword">function</span> Person(name,sex,age,job)&#123;</span><br><span class="line">	        this.name = name;</span><br><span class="line">	        this.sex = sex;</span><br><span class="line">	        this.age = age;</span><br><span class="line">	        this.job = job;</span><br><span class="line">	        this.showPerson = <span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">	            console.log(this);</span><br><span class="line">	        &#125;</span><br><span class="line">	    &#125;</span><br><span class="line">	　　Person() </span><br><span class="line">	　　window.showPerson() //window对象</span><br><span class="line"></span><br><span class="line">	var person = new Person(<span class="string">"cjl"</span>, <span class="string">"male"</span>, 25, <span class="string">"webFront"</span>)</span><br><span class="line">	person.showPerson() //Person &#123;name: <span class="string">"cjl"</span>, sex: <span class="string">"male"</span>, age: 25, job: <span class="string">"webFront"</span>&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-<p>上面代码首先定义了一个函数，函数里面用到了this；直接执行函数，随后执行window的showPerson()方法，可以发现，打印出的是window对象；使用new操作符实例化函数之后，this代表的是person对象，我们一般把构造函数函数名首字母大写以和普通函数区分。</p>
-<h3 id="new操作符的作用"><a href="#new操作符的作用" class="headerlink" title="new操作符的作用"></a>new操作符的作用</h3><ol>
-<li>创建一个新的对象；</li>
-<li>将构造函数的作用域赋给新对象（因此this就指向了这个新对象）；</li>
-<li>执行构造函数中的代码（this.xxx就为这个新对象添加某些属性、方法）；</li>
-<li>返回新的对象。</li>
-</ol>
-<h2 id="call和apply"><a href="#call和apply" class="headerlink" title="call和apply"></a>call和apply</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">	var name = <span class="string">"cjl"</span></span><br><span class="line">	<span class="keyword">function</span> fn(name)&#123;</span><br><span class="line">	    console.log(name);</span><br><span class="line">	    console.log(this.name);</span><br><span class="line">	    console.log(this);</span><br><span class="line">	&#125;</span><br><span class="line">	fn(<span class="string">"1"</span>) //1 cjl window</span><br><span class="line">	var obj = &#123;</span><br><span class="line">	  name:<span class="string">"cjl1"</span></span><br><span class="line">	&#125;</span><br><span class="line">	fn.apply(obj,[<span class="string">"2"</span>]) //2 cjl1 Object &#123;name: <span class="string">"cjl1"</span>&#125;</span><br><span class="line">	fn.call(obj,<span class="string">"2"</span>) //2 cjl1 Object &#123;name: <span class="string">"cjl1"</span>&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-<p>这两个方法经常在关于prototype原型的时候看到，但现在咱们先不管原型，单说这两个方法，我把它们理解成扩展、继承的意思；它们作用相同，不同的是传参类型区别：apply方法只能传递数组作为参数，call方法则是都可以。<br>上面代码定义了一个fn函数和一个对象，如果想让obj对象也拥有fn函数的方法，那么就可以使用apply或者call。</p>
 
       
     </div>
